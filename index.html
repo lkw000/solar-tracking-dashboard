@@ -268,13 +268,13 @@
   <main class="container">
     <header>
       <section>
-        <div class="eyebrow">NLR Energy Career Challenge</div>
+        <div class="eyebrow">Solar Energy System</div>
         <h1>Solar Tracking Dashboard</h1>
-        <p class="subtitle">A clean data visualization dashboard for comparing solar panel performance, tracking power output, and showing how a moving solar panel can improve energy capture over time.</p>
+        <p class="subtitle">A real-time visualization interface for monitoring solar panel performance, battery storage, and power output from a rotating solar tracking system.</p>
       </section>
       <aside class="status-pill" aria-label="System status">
         <span>System Status</span>
-        <strong id="systemStatus">Using sample data</strong>
+        <strong id="systemStatus">Sample data active</strong>
       </aside>
     </header>
 
@@ -311,29 +311,29 @@
         <div class="panel-header">
           <div>
             <h2>Power Output Over Time</h2>
-            <p class="helper">This graph shows how much power the panel produces during each measurement.</p>
+            <p class="helper">Power output is calculated from voltage and current readings collected during system operation.</p>
           </div>
         </div>
         <canvas id="powerChart" aria-label="Line graph showing solar power output over time"></canvas>
       </article>
 
       <aside class="panel">
-        <h2>Upload Real Data</h2>
-        <p class="helper">Use sample data now. Later, paste Arduino readings into a CSV file and upload it here.</p>
+        <h2>Data Input</h2>
+        <p class="helper">Upload a CSV file to display recorded solar tracking system measurements.</p>
         <div class="upload-box">
           <strong>CSV format:</strong>
           <p class="helper">time,voltage,current,power,battery,tracking</p>
           <input type="file" id="csvFile" accept=".csv" />
           <div class="button-row">
-            <button id="loadSample">Load Sample</button>
-            <button class="secondary" id="downloadTemplate">Download CSV Template</button>
+            <button id="loadSample">Load Sample Data</button>
+            <button class="secondary" id="downloadTemplate">Download Template</button>
           </div>
         </div>
         <div class="formula">
           <strong>Main formula:</strong><br />
           Power (W) = Voltage (V) × Current (A)
         </div>
-        <p class="footer-note">Tip: Keep the Arduino output clean: <strong>time,voltage,current,power,battery,tracking</strong>. That makes the data easy to paste into a spreadsheet and save as CSV.</p>
+        <p class="footer-note">The dashboard accepts CSV data using the following columns: <strong>time, voltage, current, power, battery, tracking</strong>.</p>
       </aside>
     </section>
 
@@ -341,7 +341,7 @@
       <div class="panel-header">
         <div>
           <h2>Recent Measurements</h2>
-          <p class="helper">The latest data points are shown here so judges can quickly understand the numbers behind the graph.</p>
+          <p class="helper">Recent system measurements are displayed below for quick review and comparison.</p>
         </div>
       </div>
       <div style="overflow-x:auto;">
@@ -457,7 +457,7 @@
       });
     }
 
-    function loadData(data, statusText = "Using sample data") {
+    function loadData(data, statusText = "Sample data active") {
       const normalized = data.map(normalizeRow).filter(row => row.time !== "--");
       if (!normalized.length) return alert("No usable data found. Check your CSV headers.");
       updateCards(normalized);
@@ -484,7 +484,7 @@
       reader.onload = () => {
         try {
           const parsed = parseCSV(reader.result);
-          loadData(parsed, "Using uploaded data");
+          loadData(parsed, "Uploaded data active");
         } catch (error) {
           alert("Could not read the CSV. Make sure it uses this header: time,voltage,current,power,battery,tracking");
         }
